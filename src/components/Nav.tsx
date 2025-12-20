@@ -6,29 +6,33 @@ const links = [
   { href: "/", label: "Home" },
   { href: "/leads", label: "Leads" },
   { href: "/activities", label: "Activities" },
+  { href: "/tasks", label: "Tasks" },
   { href: "/analytics", label: "Analytics" },
 ];
 
 export default function Nav() {
   const pathname = usePathname();
   return (
-    <nav className="flex gap-4 items-center py-3">
-      <span className="font-bold text-xl">CRM</span>
-      <ul className="flex gap-3">
+    <nav className="flex items-center justify-between">
+      <div className="flex items-center gap-2">
+        <span className="font-semibold">{links.find(l => l.href === pathname)?.label || "CRM"}</span>
+      </div>
+      <div className="flex items-center gap-2">
         {links.map((l) => (
-          <li key={l.href}>
-            <Link
-              className={
-                "px-3 py-1 rounded hover:bg-gray-100 " +
-                (pathname === l.href ? "bg-gray-200" : "")
-              }
-              href={l.href}
-            >
-              {l.label}
-            </Link>
-          </li>
+          <Link
+            key={l.href}
+            className={
+              "rounded px-3 py-2 text-sm transition-colors " +
+              (pathname === l.href
+                ? "bg-[color:var(--brand)] text-white"
+                : "hover:bg-[color:color-mix(in oklab, var(--brand) 8%, transparent)]")
+            }
+            href={l.href}
+          >
+            {l.label}
+          </Link>
         ))}
-      </ul>
+      </div>
     </nav>
   );
 }
